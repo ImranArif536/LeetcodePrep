@@ -16,7 +16,7 @@ public class LinkedListCustom <V>{
             this.tail.next.value = val;
             this.tail = this.tail.next;
         }
-        nodeCount++;
+        this.nodeCount++;
         return head;
     }
 
@@ -26,6 +26,48 @@ public class LinkedListCustom <V>{
             temp = temp.next;
         }
         return temp.value;
+    }
+
+    public V remove(int index){
+        if(index > nodeCount || head == null){
+            throw new IndexOutOfBoundsException();
+        }
+        if(index == 0){
+            LinkedListNode t = head;
+            head = head.next;
+            t.next = null;
+            nodeCount--;
+            return t.value;
+        }
+        LinkedListNode temp = head;
+        int i=0;
+        while(i < index){
+            temp = temp.next;
+            i++;
+        }
+        LinkedListNode r = temp.next;
+        temp.next = r.next;
+        r.next = null;
+        nodeCount--;
+        return temp.next.value;
+    }
+
+    public boolean remove(V val){
+        if(head == null)
+            return false;
+        LinkedListNode thead = new LinkedListNode();
+        thead.value = null;
+        thead.next = head;
+        while(thead.next != null && thead.next.value != val){
+            thead = thead.next;
+        }
+        if(thead.next == null || thead.next.value != val)
+            return false;
+        LinkedListNode r = thead.next;
+        thead.next = r.next;
+        r.next = null;
+        nodeCount--;
+        return true;
     }
 
     class LinkedListNode{
